@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "prompt-sync": "^4.2.0",
+    "whatsapp-web.js": "^1.16.6"
+  },
+  "name": "wwebjs",
+  "version": "1.0.0",
+  "main": "main.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
