@@ -10,7 +10,7 @@ const csvread= async(path)=>{
     var c=  cont.split(/\r?\n/)[0].split(',').length
 
     for (let i = 0; i < r; i++) {
-        arr.push(new Array(c).fill(0));
+        arr.push(new Array(c).fill(null));
     }
     cont.split(/\r?\n/).forEach((line)=>{
         j=0
@@ -21,7 +21,6 @@ const csvread= async(path)=>{
     })
 
     return arr;
-
 
 }
 module.exports = csvread;

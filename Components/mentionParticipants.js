@@ -1,4 +1,5 @@
 module.exports = mentionParticipants = async (client, msg) => {
+
     console.log(msg.body);
 
     if (msg.fromMe && msg.body == "!skwadoosh") {
@@ -19,7 +20,13 @@ module.exports = mentionParticipants = async (client, msg) => {
         try {
             // client.sendMessage(chat.id._serialized,text,{mentions,quotedMessageId: og.id._serialized})
             // client.sendMessage('120363019836266375@g.us',text,{mentions,quotedMessageId: 'false_120363019836266375@g.us_5F92E541412D02D8E347D46507DD39EA_919995614322@c.us'})
-            og.reply(text, null, { mentions });
+            if(msg.hasQuotedMsg){
+                og.reply(text, null, { mentions });
+            }
+            else{
+                chat.sendMessage(text,{mentions})
+
+            }
         } catch (err) {
             console.log(err);
         }

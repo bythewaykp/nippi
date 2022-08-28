@@ -8,7 +8,10 @@ const client = new Client({
     }),
     puppeteer: {
         defaultViewport: null,
-        args: ["--start-maximized"],
+        args: [
+            "--start-maximized",
+            "--disable-session-crashed-bubble"
+        ],
         headless: false,
         executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
     },
@@ -24,32 +27,31 @@ const clearCache = () => {
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 client.initialize();
-// client.on('message',async (msg)=>{
-//     // msg.body
-//     // msg.reply
-//     console.log(msg.body);
-//     if(msg.fromMe){
-//         console.log('me');
-//         console.log(msg.to);
-//     }
-//     let m = await msg.getChat()
-//     console.log(m)
-// })
+
+
 client.on("ready", async () => {
+
+    // client.on("disconnected",async()=>{
+    //     await delay(500)
+    //     console.log('client disconnected');
+    // })
+
     console.log("\n --- Client is ready! ---");
 
     do {
         console.log(`
-l : List all the grps
-m : Mention all partipants
-c : Clear console
-s : Send bulk message
-a : send all
-e : Quit
+l : list All Grps
+m : mention All Partipants
+c : clear Console
+s : send Bulk Message
+t : test Function
+d : add Participants
+e : quit
 `);
         clearCache();
 
         switch ((input = prompt("Enter a command: "))) {
+            
             case "l":
                 await require("./Components/listAllGrps")(client);
                 break;
@@ -59,12 +61,15 @@ e : Quit
 
                 client.on("message_create", async (msg) => {
                     clearCache();
-                    await require("./Components/mentionParticipants")(client, msg);
+                    await require("./Components/mentionParticipants")(
+                        client,
+                        msg
+                    );
                 });
-                return
+                return;
 
             case "s":
-                await require("./Components/sendbulk")(client);
+                await require("./Components/sendBulk")(client);
                 break;
 
             case "c":
@@ -74,12 +79,18 @@ e : Quit
             case "t":
                 await require("./Components/test")(client);
                 break;
-            case "a":
-                await require("./Components/sendall")(client);
-                break;
+
             case "d":
-                await require("./Components/addgrp")(client);
-                break;
+                console.log("\n --- Triggered ---\n");
+
+                let csvread = require('../Templates/csvread')
+
+                client.on("message_create", async (msg) => {
+                    clearCache();
+                    await require("./Components/addGrp")(msg,csvread);
+
+                });
+                return;
 
             case "e":
                 console.log("\n-- Connection closed --\n");
