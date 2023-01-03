@@ -2,7 +2,7 @@ const {MessageMedia} = require('whatsapp-web.js');
 const fs = require('fs')
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-module.exports = sendBulk = async (client) => {
+module.exports = sendBulk = async (client,msg,t) => {
 
     let name;
     let num;

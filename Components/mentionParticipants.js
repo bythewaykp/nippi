@@ -1,34 +1,78 @@
 module.exports = mentionParticipants = async (client, msg) => {
 
-    console.log(msg.body);
+    const chat = await msg.getChat();
+    console.log(`${chat.name} triggered!`);
+    let text = "";
+    let mentions = [];
 
-    if (msg.fromMe && msg.body == "!skwadoosh") {
-        let og = await msg.getQuotedMessage();
-        const chat = await msg.getChat();
-        console.log(`${chat.name} triggered!`);
-        let text = "";
-        let mentions = [];
 
-        for (let participant of chat.participants) {
-            const contact = await client.getContactById(
-                participant.id._serialized
-            );
-            mentions.push(contact);
+    for (let participant of chat.participants) {
+        const contact = await client.getContactById(
+            participant.id._serialized
+        );
+        mentions.push(contact);
+
+        if(participant.id.user!=msg.from.split('@')[0]){
             text += `@${participant.id.user} `;
         }
-
-        try {
-            // client.sendMessage(chat.id._serialized,text,{mentions,quotedMessageId: og.id._serialized})
-            // client.sendMessage('120363019836266375@g.us',text,{mentions,quotedMessageId: 'false_120363019836266375@g.us_5F92E541412D02D8E347D46507DD39EA_919995614322@c.us'})
-            if(msg.hasQuotedMsg){
-                og.reply(text, null, { mentions });
-            }
-            else{
-                chat.sendMessage(text,{mentions})
-
-            }
-        } catch (err) {
-            console.log(err);
-        }
     }
+
+    try {
+        if(msg.hasQuotedMsg){
+            let og = await msg.getQuotedMessage();
+            og.reply(text, null, { mentions });
+        }
+        else{
+            // console.log(text);
+            chat.sendMessage(text,{mentions})
+            
+
+        }
+    } catch (err) {
+        console.log(err);
+    }
+
+    // if (msg.fromMe && msg.body == "!r") {
+    //     // client.removeAllListeners()
+        
+    //     // client.removeListener("message_create",()=>{
+    //     //     console.log('removed msg_create');
+    //     // })
+    //     return
+    // }
+
+    // if (msg.fromMe && msg.body == "!skwadoosh") {
+
+    //     const chat = await msg.getChat();
+    //     console.log(`${chat.name} triggered!`);
+    //     let text = "";
+    //     let mentions = [];
+
+
+    //     for (let participant of chat.participants) {
+    //         const contact = await client.getContactById(
+    //             participant.id._serialized
+    //         );
+    //         mentions.push(contact);
+
+    //         if(participant.id.user!=msg.from.split('@')[0]){
+    //             text += `@${participant.id.user} `;
+    //         }
+    //     }
+
+    //     try {
+    //         if(msg.hasQuotedMsg){
+    //             let og = await msg.getQuotedMessage();
+    //             og.reply(text, null, { mentions });
+    //         }
+    //         else{
+    //             // console.log(text);
+    //             chat.sendMessage(text,{mentions})
+                
+
+    //         }
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // }
 };
