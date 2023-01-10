@@ -28,7 +28,7 @@ const clearCache = () => {
 
 client.on("ready", async () => {
     
-    console.log("\n --- Client is ready! ---");
+    console.log("\n --- Client is ready! ---\n");
     
 });
 
@@ -38,13 +38,15 @@ client.on("disconnected",async()=>{
 })
 
 client.on("message_create", async (msg) => {
-    
-    if(msg.fromMe){
 
-        clearCache();
-        
-        await require("./caller")(client,msg,MessageMedia);
+    let vars = {
+        others:false,
     }
+    
+    clearCache();
+    
+    await require("./caller")(client,msg,MessageMedia,vars);
+    
 
 });
 

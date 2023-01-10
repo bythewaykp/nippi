@@ -1,24 +1,13 @@
-const fs = require('fs');
-const delay = ms => new Promise(res => setTimeout(res, ms));
 
-const getOnlineStatus= async (client) =>{
-    try{
+module.exports = async (client,msg,t) => {
 
-        const chatId = '917306487647@c.us';
-        let b = await client.pupPage.evaluate(async (chatId) => {
-            let chat = await window.Store.Chat.get(chatId);
-            // return chat
-            // console.log(chat.presence);
-            return chat.presence.isOnline;
-        }, chatId);
-        console.log(b);
+    // const chat = await msg.getChat();
 
-    }
-    catch(e){
-        console.log('err');
+    let m = await msg.ack
+
+    console.log(m);
     
-    }
-
+    
 }
 
-module.exports = getOnlineStatus;
+

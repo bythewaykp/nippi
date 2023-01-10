@@ -1,10 +1,14 @@
 {
   "dependencies": {
+    "google-spreadsheet": "^3.3.0",
     "mongoose": "^6.8.2",
     "prompt-sync": "^4.2.0",
     "puppeteer-core": "^19.4.1",
+    "require-from-url": "^3.1.3",
     "whatsapp-web.js": "^1.18.3",
-    "wwebjs-mongo": "^1.1.0"
+    "wwebjs-mongo": "^1.1.0",
+    "ytdl-core": "^4.11.2",
+    "ytsr": "^3.8.0"
   },
   "name": "wwebjs",
   "version": "1.0.0",
