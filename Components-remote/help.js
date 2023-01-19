@@ -1,4 +1,3 @@
-let rxns = ['😌️','😉️','❤️','👌️','🤏️','✌️','🤙️','🫰️','👍️','🤝️','🫂️'];
 
 let text = 
 `!h : help, the bravest thing to do is ask for help.

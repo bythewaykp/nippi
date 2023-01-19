@@ -1,10 +1,11 @@
-const { Client, LocalAuth ,MessageMedia } = require("whatsapp-web.js");
-// const prompt = require("prompt-sync")();
-// let fs = require('fs')
+let { Client, LocalAuth ,MessageMedia } = require("whatsapp-web.js");
+let qrcode = require('qrcode-terminal');
+
+let headless = false
 
 const client = new Client({
     authStrategy: new LocalAuth({
-        clientId: "kp",
+        clientId: "rose",
         dataPath: "./Sessions",
     }),
     puppeteer: {
@@ -13,7 +14,7 @@ const client = new Client({
             "--start-maximized",
             "--disable-session-crashed-bubble"
         ],
-        headless: false,
+        headless,
         executablePath:'/usr/bin/google-chrome-stable'
         // executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
     },
@@ -32,22 +33,26 @@ client.on("ready", async () => {
     
 });
 
+client.on('qr', qr => {
+
+    if(headless){
+        qrcode.generate(qr, {small: true});
+    }
+    
+});
+
 client.on("disconnected",async()=>{
-    // await delay(500)
+
     console.log('client disconnected');
+
 })
 
 client.on("message_create", async (msg) => {
-
-    let vars = {
-        others:false,
-    }
     
     clearCache();
     
-    await require("./caller")(client,msg,MessageMedia,vars);
+    await require("./caller")(client,msg,MessageMedia);
     
-
 });
 
 client.initialize();

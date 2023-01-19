@@ -1,13 +1,36 @@
+// import axios from 'axios';
+// import { Schema, model } from 'mongoose';
 
-module.exports = async (client,msg,t) => {
 
-    // const chat = await msg.getChat();
+export default async (client,msg,t) => {
 
-    let m = await msg.ack
+    console.log(msg.body);
 
-    console.log(m);
-    
-    
+    // console.log(mongoose);
+
+    // const kittySchema = new Schema({
+    //     all: String
+    // });
+
+    // console.log('hi');
+    // const Kitten = model('Kitten', kittySchema);
+
+    // const silence = new Kitten({ all: 'Silence' });
+    // // console.log(silence.all);
+
+    // try{
+    //     await silence.save()
+    // }catch(e){
+    //     console.log(e);
+    // }
+
+
+
+    // const kittens = await Kitten.find();
+    // console.log(kittens);
+
+
+    // await msg.react('⚡');
 }
 
 

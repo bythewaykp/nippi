@@ -27,6 +27,12 @@ module.exports = async (client,msg,t,MessageMedia) => {
             else{
                 let searchResults = await ytsr(t['t'],{limit: 1})
                 url = searchResults.items[0].url
+                if(!url){
+                    await msg.reply('no search results found vro')
+                    return
+                }
+
+
             }
             
             await msg.react('⚡');
@@ -41,7 +47,7 @@ module.exports = async (client,msg,t,MessageMedia) => {
                     
                     .on('progress', p => {
                         readline.cursorTo(process.stdout, 0);
-                        process.stdout.write(`${p.targetSize}kb downloaded`);
+                        process.stdout.write(`${p.targetSize} kb downloaded`);
                     })
                     .on('end', async () => {
                         media = MessageMedia.fromFilePath(`./Files/${title}.mp3`);
@@ -50,6 +56,10 @@ module.exports = async (client,msg,t,MessageMedia) => {
                         console.log(`\nsent\n`);
                 });
             })
+
+            stream.on('finish', async () => {
+                console.log('done');
+            });
         }
     }
     catch(e){
