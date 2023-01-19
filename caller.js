@@ -1,6 +1,5 @@
-let axios = require('axios')
 
-module.exports = async (client,msg,MessageMedia,mongoose)=> {
+module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
 
     try{
 
@@ -28,11 +27,11 @@ module.exports = async (client,msg,MessageMedia,mongoose)=> {
                     break;
 
                 case "!p":
-                    await require("./Components/makeAdmin")(client,msg,t);
+                    await require("./Components/adminPromote")(client,msg,t);
                     break;
     
                 case "!d":
-                    await require("./Components/demoteAdmin")(client,msg,t);
+                    await require("./Components/adminDemote")(client,msg,t);
                     break;
 
                 case "!y":
@@ -40,11 +39,11 @@ module.exports = async (client,msg,MessageMedia,mongoose)=> {
                     break;
         
                 case "!t":
-                    await require("./Components/test").default(client,msg,t,mongoose);
+                    await require("./Components/test")(client,msg,t,vars,changeVars);
                     break;
 
                 case "!s":
-                    await require("./Components/sendBulk")(client,msg,t);
+                    await require("./Components/sticker")(client,msg,t);
                     break;
         
                 case "!a":
@@ -52,34 +51,19 @@ module.exports = async (client,msg,MessageMedia,mongoose)=> {
                     await require("./Components/addMembers")(client,msg,t,gspread);
                     break;
                 
-                
                 case "!z":
                     await require("./Components/sendGrpMessageMembers")(client,msg,t);
                     break;
                 
-                
                 case "!v":
-                    await require("./Components/editVariables")(client,msg,t);
+                    await require("./Components/editVariables")(client,msg,t,vars,changeVars);
                     break;
 
-                // case "!ack":
-                //     client.on('message_ack',(msg,id)=>{
-                //         console.log(msg.body,id);
-                //     })
-                //     break
             }
             
         }
         else{
-            //msg not fromMe
-
-            let vars = await axios.get("http://localhost:3000/vars").then(r=>{
-
-                return r.data
-
-            }).catch((e)=>{
-                console.log(e);
-            })
+            // msg not fromMe
 
             if(vars.all){
 
@@ -94,11 +78,11 @@ module.exports = async (client,msg,MessageMedia,mongoose)=> {
                         break;
                     
                     case "!p":
-                        await require("./Components/makeAdmin")(client,msg,t);
+                        await require("./Components/adminPromote")(client,msg,t);
                         break;
     
                     case "!d":
-                        await require("./Components/demoteAdmin")(client,msg,t);
+                        await require("./Components/adminDemote")(client,msg,t);
                         break;
                     
                     case "!y":
@@ -106,14 +90,19 @@ module.exports = async (client,msg,MessageMedia,mongoose)=> {
                         break;
     
                     case "!t":
-                        await require("./Components/test").default(client,msg,t);
+                        await require("./Components/test")(client,msg,t);
                         break;
-    
-                    case "!n":
-                        await require("./Components/savedNotes")(client,msg,t);
-                        break;
+
                     case "!v":
-                        await require("./Components/editVariables")(client,msg,t);
+                        await require("./Components/editVariables")(client,msg,t,vars,changeVars);
+                        break;
+
+                    case "!z":
+                        await require("./Components/sendGrpMessageMembers")(client,msg,t);
+                        break;
+                    
+                    case "!s":
+                        await require("./Components/sticker")(client,msg,t);
                         break;
 
                 }
@@ -122,17 +111,18 @@ module.exports = async (client,msg,MessageMedia,mongoose)=> {
                 // msg not fromMe && turned off
 
                 if(t['main']=='!v'){
-                    await require("./Components/editVariables")(client,msg,t);
+                    await require("./Components/editVariables")(client,msg,t,vars,changeVars);
                 }
                 else{
 
-                    mentions = [await client.getContactById(client.info.wid._serialized)]
-                    await msg.reply(
+//                     mentions = [await client.getContactById(client.info.wid._serialized)]
 
-`_nippi_ is turned off for everyone use
+//                     await msg.reply(
 
-contact @${client.info.wid.user}`,null,{mentions}
-                    )
+// `_nippi_ is turned off for everyone use
+
+// contact @${client.info.wid.user}`,null,{mentions}
+//                     )
                 }
             }
 
@@ -140,7 +130,6 @@ contact @${client.info.wid.user}`,null,{mentions}
 
     }
     catch(e){
-        console.log('error');
         console.log(e);
     }
 

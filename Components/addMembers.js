@@ -1,4 +1,4 @@
-module.exports = addGrp= async (client,msg,t,gspread)=>{
+module.exports = addGrp = async (client,msg,t,gspread)=>{
 
     console.log("\n --- addMember ---\n");
     let chat = await msg.getChat()

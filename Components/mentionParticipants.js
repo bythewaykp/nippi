@@ -12,11 +12,11 @@ module.exports = mentionParticipants = async (client, msg,t) => {
 
     if(chat.isGroup){
 
-        for (let k of chat.participants) {
+        let isadmin = await require('./adminCheck')(client,msg,t)
 
-            if(from == k.id._serialized && k.isAdmin){
-
-                await msg.react('⚡');
+        if(isadmin){
+            
+            await msg.react('⚡');
 
                 for(let p of chat.participants){
 
@@ -40,12 +40,11 @@ module.exports = mentionParticipants = async (client, msg,t) => {
                 else{
                     chat.sendMessage(text,{mentions})
                 }
-            }
-            else if ((msg.author || msg.from) == k.id._serialized && !k.isAdmin){
-                msg.reply('not admin vro')
-            }
-
         }
+        else{
+            msg.reply('not admin vro')
+        }
+
     }
 
 };

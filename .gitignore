@@ -5,6 +5,4 @@ package-lock.json
 /Sessions
 /SessionTest
 .env
-remoteauth.js
-sam.js
-main.js
+# test.js

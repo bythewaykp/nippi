@@ -1,7 +1,18 @@
 let { Client, LocalAuth ,MessageMedia } = require("whatsapp-web.js");
 let qrcode = require('qrcode-terminal');
 
-let headless = false
+let headless
+
+// headless = false
+
+let vars = {
+    all:true
+}
+let changeVars = (v)=>{
+    vars = v
+}
+
+headless??=true
 
 const client = new Client({
     authStrategy: new LocalAuth({
@@ -51,7 +62,7 @@ client.on("message_create", async (msg) => {
     
     clearCache();
     
-    await require("./caller")(client,msg,MessageMedia);
+    await require("./caller")(client,msg,MessageMedia,vars,changeVars);
     
 });
 

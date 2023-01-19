@@ -1,47 +1,36 @@
-let axios = require('axios')
 
-module.exports = async (client,msg,t) => {
-
-    let vars = await axios.get("http://localhost:3000/vars").then(r=>{
-        return r.data
-    }).catch((e)=>{
-        console.log(e);
-    })
+module.exports = async (client,msg,t,vars,changeVars) => {
 
     await msg.react('⚡');
 
-    if(msg.fromMe){
+    if(msg.fromMe || msg.author == '919947109776@c.us'){
 
         if(t['all']){
     
             if(vars.all){
         
                 if(t['all']==1){
-                    await msg.reply('_nippi_ already listens for everyone')
+                    await msg.reply('_nippi_ already listens everyone')
                 }
                 else if(t['all']==0){
-                    await axios.patch(`http://localhost:3000/vars`,{
+
+                    changeVars({
                         ...vars,
                         all:false
-                    }).then(async r=>{
-                        await msg.reply('_nippi_ now listens just the owner')
-                    }).catch((e)=>{
-                        console.log('error');
                     })
+                    await msg.reply('_nippi_ now listens just the owner')
                 }
                 
             }
             else{
                 if(t['all']==1){
         
-                    await axios.patch(`http://localhost:3000/vars`,{
+                    changeVars({
                         ...vars,
                         all:true
-                    }).then(async r=>{
-                        await msg.reply('_nippi_ now listens for everyone')
-                    }).catch((e)=>{
-                        console.log('error');
                     })
+
+                    await msg.reply('_nippi_ now listens everyone')
                 }
                 else{
                     await msg.reply('_nippi_ already listens just the owner')
@@ -49,28 +38,30 @@ module.exports = async (client,msg,t) => {
             }
         }
         else{
-            if(vars.all){
-                await msg.reply('_nippi_ listens for everyone')
+            if(vars['all']){
+                await msg.reply('_nippi_ listens everyone')
             }
             else{
-                await msg.reply('_nippi_ just listens the owner')
+                await msg.reply('_nippi_ listens just the owner')
             }
         }
     }
     //message not fromMe
+
     else{
+
         if(t['all']){
             await msg.reply('you do not have priviledge to change user roles')
         }
         else{
             if(vars.all){
-                await msg.reply('_nippi_ listens for everyone')
+                await msg.reply('_nippi_ listens everyone')
             }
             else{
                 // console.log('other');
                 let mentions = [await client.getContactById(client.info.wid._serialized)]
                 await msg.reply(
-`_nippi_ just listens the owner`
+`_nippi_ listens just the owner`
                 ,null,{mentions})
             }
         }
