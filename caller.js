@@ -1,4 +1,3 @@
-
 module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
 
     try{
@@ -48,7 +47,11 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
         
                 case "!a":
                     let gspread = require("./Templates/gspread")
-                    await require("./Components/addMembers")(client,msg,t,gspread);
+                    await require("./Components/membersAdd")(client,msg,t,gspread);
+                    break;
+                
+                case "!r":
+                    await require("./Components/membersRemove")(client,msg,t);
                     break;
                 
                 case "!z":
@@ -90,7 +93,7 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
                         break;
     
                     case "!t":
-                        await require("./Components/test")(client,msg,t);
+                        await require("./Components/test")(client,msg,t,MessageMedia);
                         break;
 
                     case "!v":
@@ -104,6 +107,20 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
                     case "!s":
                         await require("./Components/sticker")(client,msg,t);
                         break;
+
+                    case "!a":
+                        let gspread = require("./Templates/gspread")
+                        await require("./Components/membersAdd")(client,msg,t,gspread);
+                        break;
+                    
+                    case "!r":
+                        await require("./Components/membersRemove")(client,msg,t);
+                        break;
+                    
+                    case "!q":
+                        await require("./Components/yt")(client,msg,t,MessageMedia);
+                        break;
+
 
                 }
             }

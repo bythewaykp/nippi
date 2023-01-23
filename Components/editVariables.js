@@ -60,6 +60,7 @@ module.exports = async (client,msg,t,vars,changeVars) => {
             else{
                 // console.log('other');
                 let mentions = [await client.getContactById(client.info.wid._serialized)]
+                
                 await msg.reply(
 `_nippi_ listens just the owner`
                 ,null,{mentions})
