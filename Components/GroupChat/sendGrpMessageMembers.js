@@ -6,7 +6,7 @@ module.exports = async(client,msg,t)=>{
 
     if(chat.isGroup){
 
-        let isadmin = await require('./adminCheck')(client,msg,t)
+        let isadmin = await require('../Templates/adminCheck')(client,msg,t)
 
         if(isadmin){
             //is admin

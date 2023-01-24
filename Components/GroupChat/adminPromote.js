@@ -1,12 +1,12 @@
 
-module.exports = async (client,msg,t) => {
+module.exports = async (client,msg) => {
 
     let chat = await require('../Templates/basicCheckGroupChat')(client,msg)
     // const chat = await msg.getChat()
 
     let from = msg.author || msg.from 
     let sender = await client.getContactById(from)
-    console.log(`${t['main']} called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
+    console.log(`.p called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
     
     if(chat){
 
@@ -14,7 +14,7 @@ module.exports = async (client,msg,t) => {
                         
         let commandAuthor = await client.getContactById(from)
 
-        console.log(`${t['main']} called at Group : '${chat.name}' by ${commandAuthor.name || commandAuthor.pushname} aka ${commandAuthor.number}`);
+        console.log(`.a called at Group : '${chat.name}' by ${commandAuthor.name || commandAuthor.pushname} aka ${commandAuthor.number}`);
 
         if(msg.hasQuotedMsg){
             let og = await msg.getQuotedMessage()

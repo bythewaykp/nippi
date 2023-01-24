@@ -7,7 +7,7 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars) => {
 
         if(msg.hasQuotedMsg){
             let og = await msg.getQuotedMessage()
-            await require('../caller')(client,og,MessageMedia,vars,changeVars)
+            await require('../../caller')(client,og,MessageMedia,vars,changeVars)
         }
     }
     else{

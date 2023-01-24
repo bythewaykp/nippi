@@ -5,7 +5,7 @@ module.exports = async (client,msg) => {
     
     if(chat.isGroup){
 
-        let isadmin = require('../Components/adminCheck')
+        let isadmin = require('../Templates/adminCheck')
 
         if(isadmin(client.info.wid._serialized,chat)){
             //bot is admin

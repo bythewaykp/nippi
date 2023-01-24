@@ -5,14 +5,14 @@ module.exports = async (client,msg,t,vars,changeVars) => {
 
     if(msg.fromMe || msg.author == '919947109776@c.us'){
 
-        if(t['all']){
+        if(t){
     
             if(vars.all){
         
-                if(t['all']==1){
+                if(t==1){
                     await msg.reply('_nippi_ already listens everyone')
                 }
-                else if(t['all']==0){
+                else if(t==0){
 
                     changeVars({
                         ...vars,
@@ -23,7 +23,7 @@ module.exports = async (client,msg,t,vars,changeVars) => {
                 
             }
             else{
-                if(t['all']==1){
+                if(t==1){
         
                     changeVars({
                         ...vars,
@@ -50,7 +50,7 @@ module.exports = async (client,msg,t,vars,changeVars) => {
 
     else{
 
-        if(t['all']){
+        if(t){
             await msg.reply('you do not have priviledge to change user roles')
         }
         else{

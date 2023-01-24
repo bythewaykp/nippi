@@ -5,41 +5,30 @@ const ffmpeg = require('fluent-ffmpeg');
 
 module.exports = async (client,msg,t,MessageMedia) => {
 
-    
     let chat = await msg.getChat()
     let from = msg.author || msg.from 
     let sender = await client.getContactById(from)
 
     if(chat.isGroup){
-        console.log(`${t['main']} called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
+        console.log(`.y called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
     }
     else{
-        console.log(`${t['main']} called by ${sender.name || sender.pushname} aka ${sender.number}`);
+        console.log(`.y called by ${sender.name || sender.pushname} aka ${sender.number}`);
     }
-    
-    if(t['t']!=undefined || t['url']!=undefined){
-        
-        let url;
-        
-        if(t['url']){
-            url = t['url']
-            if(!ytdl.validateURL(url)){
-                await msg.reply('not a valid youtube link vro')
-                return
-            }
-        }
-        else if (t['t']){
 
-            
-            let searchResults = await ytsr(t['t'],{limit: 1})
-            url = searchResults.items[0].url
-            if(!url){
-                await msg.reply('no search results found vro')
-                return
-            }
-                        
-        }
+    let url;
 
+    if(ytdl.validateURL(t)){
+
+    }
+    else{
+        //not url
+        let searchResults = await ytsr(t,{limit: 1})
+        url = searchResults.items[0].url
+        if(!url){
+            await msg.reply('no search results found vro')
+            return
+        }
         await msg.react('⚡');
 
         try{
@@ -47,16 +36,6 @@ module.exports = async (client,msg,t,MessageMedia) => {
             let stream = ytdl(url, {quality: 'highestaudio'})
             
             stream.on('info', (info) => {
-                
-                // stream.pipe(fs.createWriteStream('a.mp4'))
-                // .on('close', function() {
-                //     console.info("closed");
-                // })
-                // .on('error', (error) => {
-                //     console.warn("error occured");
-                // })
-                // console.log(info);
-  
 
                 title = info.videoDetails.title.split(" ")[0];
 
@@ -93,17 +72,12 @@ module.exports = async (client,msg,t,MessageMedia) => {
 
             })
 
-            // stream.on('finish', async () => {
-            //     // stream.destroy()
-            //     console.log('closed stream');
-            // });
         }
         catch(e){
             console.log('yt error');
         }
-
-
     }
+
 }
 
 

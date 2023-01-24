@@ -1,11 +1,11 @@
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-module.exports = sendBulk = async (client,msg,t,MessageMedia) => {
+module.exports = sendBulk = async (client,msg,MessageMedia) => {
 
     let chat = await msg.getChat()
     let from = msg.author || msg.from 
     let sender = await client.getContactById(from)
-    console.log(`${t['main']} called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
+    console.log(`.b called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
 
     let name;
     let num;
@@ -14,10 +14,10 @@ module.exports = sendBulk = async (client,msg,t,MessageMedia) => {
 
     console.log("\n --- Triggered ---\n")
 
-    const csvread = require('../Templates/csvread')
-    const arr = await csvread('./Files/a.csv')
+    const csvread = require('../../Templates/csvread')
+    const arr = await csvread('../../Files/a.csv')
 
-    const media1 = MessageMedia.fromFilePath('./Files/a.jpeg');
+    const media1 = MessageMedia.fromFilePath('../../Files/a.jpeg');
     
     for (let i = 1; i < arr.length; i++) {
         

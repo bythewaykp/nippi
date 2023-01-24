@@ -7,10 +7,10 @@ module.exports= async (client,msg,t) => {
     let sender = await client.getContactById(from)
 
     if(chat.isGroup){
-        console.log(`${t['main']} called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
+        console.log(`.s called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
     }
     else{
-        console.log(`${t['main']} called by ${sender.name || sender.pushname} aka ${sender.number}`);
+        console.log(`.s called by ${sender.name || sender.pushname} aka ${sender.number}`);
     }
 
     let og = msg
@@ -25,7 +25,7 @@ module.exports= async (client,msg,t) => {
         
         if (media.mimetype && (media.mimetype.includes("image") || media.mimetype.includes("video"))) {
 
-            await msg.reply(media, null, { sendMediaAsSticker: true, stickerAuthor: t['author']?`${t['author']} with 🤍 nippi`:`with 🤍 nippi`, stickerName: t['pack']??"Shuttu & Nippi" });
+            await msg.reply(media, null, { sendMediaAsSticker: true, stickerAuthor: t.split(" ")[0]?`${t.split(" ")[0]} with 🤍 nippi`:`with 🤍 nippi`, stickerName: t.split(" ")[1]??"Shuttu & Nippi" });
      
         }
         else{

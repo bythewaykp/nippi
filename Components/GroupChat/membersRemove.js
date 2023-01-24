@@ -1,11 +1,11 @@
-module.exports = addGrp = async (client,msg,t)=>{
+module.exports = addGrp = async (client,msg)=>{
 
     let chat = await require('../Templates/basicCheckGroupChat')(client,msg)
     // const chat = await msg.getChat()
 
     let from = msg.author || msg.from 
     let sender = await client.getContactById(from)
-    console.log(`${t['main']} called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
+    console.log(`.r called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
     
     if(chat){
 

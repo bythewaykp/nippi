@@ -1,11 +1,11 @@
-module.exports = mentionParticipants = async (client, msg,t) => {
+module.exports = mentionParticipants = async (client, msg) => {
 
     // const chat = await msg.getChat();
     let chat = await require('../Templates/basicCheckGroupChat')(client,msg)
 
     let from = msg.author || msg.from
     let sender = await client.getContactById(from)
-    console.log(`${t['main']} called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
+    console.log(`.m called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
 
     let text = "";
     let mentions = [];
@@ -42,7 +42,5 @@ module.exports = mentionParticipants = async (client, msg,t) => {
             chat.sendMessage(text,{mentions})
         }
     }
-
-
 
 };

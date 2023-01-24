@@ -1,7 +1,7 @@
 const fs = require("fs");
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-const listgrps = async (client,msg,t) => {
+const listgrps = async (client,msg) => {
 
     //!l -p 1
     if(t['p']!=undefined &&t['p']==1){
