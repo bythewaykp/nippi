@@ -44,7 +44,7 @@ module.exports = async (client,msg,t,MessageMedia) => {
 
         try{
     
-            let stream = ytdl(url, {quality: 'lowestaudio'})
+            let stream = ytdl(url, {quality: 'highestaudio'})
             
             stream.on('info', (info) => {
                 
@@ -64,13 +64,16 @@ module.exports = async (client,msg,t,MessageMedia) => {
 
                     ffmpeg(stream)
                     .audioBitrate(128)
-                    .noVideo()
-                    .save(`./${title}.mp3`)
+                    // .noVideo()
+                    .save(`./Files/${title}.mp3`)
                     .on('start', p => {
                         console.log('started download');
                     })
                     .on('progress', p => {
                         process.stdout.write(`${p.targetSize} kb downloaded at ${p.currentKbps} kbps\r`);
+                    })
+                    .on('error',e=>{
+                        console.log(e);
                     })
                     .on('end', async () => {
                         process.stdout.clearLine()
@@ -78,8 +81,8 @@ module.exports = async (client,msg,t,MessageMedia) => {
 
                         media = MessageMedia.fromFilePath(`./Files/${title}.mp3`);
                         await msg.reply(media)
-                        fs.unlinkSync(`./${title}.mp3`)
-                        console.log(`completed download`);
+                        console.log(`sent`);
+                        fs.unlinkSync(`./Files/${title}.mp3`)
                 });
 
 

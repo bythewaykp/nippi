@@ -1,45 +1,53 @@
-const {MessageMedia} = require('whatsapp-web.js');
-const fs = require('fs')
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-module.exports = sendBulk = async (client,msg,t) => {
+module.exports = sendBulk = async (client,msg,t,MessageMedia) => {
+
+    let chat = await msg.getChat()
+    let from = msg.author || msg.from 
+    let sender = await client.getContactById(from)
+    console.log(`${t['main']} called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
 
     let name;
     let num;
 
+    let mentions = [await client.getContactById('919847532916@c.us')]
+
     console.log("\n --- Triggered ---\n")
 
     const csvread = require('../Templates/csvread')
-    const arr = await csvread('./Files/add.csv')
+    const arr = await csvread('./Files/a.csv')
 
-    const media1 = MessageMedia.fromFilePath('./Files/sp.png');
+    const media1 = MessageMedia.fromFilePath('./Files/a.jpeg');
     
     for (let i = 1; i < arr.length; i++) {
         
-        await delay((Math.random() + 1) * 1000)
+        // await delay((Math.random() + 1) * 1000)
         
         name = (arr[i][0]).split(' ')[0]
         num = (arr[i][1]).replace(/\s/g, '').slice(-10)
         
         try {
 
-            await client.sendMessage(`91${num}@c.us`,media1 );
-            // await client.sendMessage(`91${num}@c.us`,'hi' );
+            await client.sendMessage(`91${num}@c.us`,media1,{caption:
+`Dear ${name},
 
-//             await client.sendMessage(`91${num}@c.us`,
-// `Hey ${name},
+This is to remind you that you *haven't completed* the payment of *INR 280* for NSS T-shirt.
+The order for your T-shirt, if payment is not done at the *earliest by today*, will stand cancelled. 
 
-// സർഗശേഷിയെ വിപ്ലവത്തിന്റെ ആയുധമാക്കിക്കൊണ്ട്, 
-// കാലത്തിൻറെ തെരുവിൽ കലയുടെ പോരാട്ടം.
-// തെരുവുപടയുടെ തുടർച്ചയായി, 
-// എന്നിൽ നിന്നും നിങ്ങളിലേക്ക്.....
+Also if you havent't filled *all of the below*, do ASAP.
 
-// To rebel against all odds, to stand up for what is right, and to let our voices be heard. Through powerful songs and cleverly crafted stories, we set ablaze the fire of insurgence!
+Form for choosing T-shirt size :
+_https://forms.gle/kR5baj4XPDWPtc7s8_
 
-// Streetplay Malayalam orientation
-// Venue : ELHC
-// Time : 9:00 PM
-// https://www.instagram.com/p/ChRjfhDvgFL/?igshid=MDJmNzVkMjY`)
+Form for Cap :
+_https://forms.gle/hY4pQyNELQNfr7Wt9_
+
+After completing the payment update the sheet :
+_https://docs.google.com/spreadsheets/d/1oi07EtXLoEl_m29J_luff6Td3OZiK4OpK1kWg3w97j0/edit?usp=drivesdk_
+
+Contact @919847532916 if you have any queries.`,mentions})
+                
+
             // arr[i][5] = 'message sent'
             console.log(`${i}/${arr.length-1} --- ${name}`);
             // fs.appendFileSync('./Files/b21-succ.csv', `${i},${arr[i][0]},${arr[i][1]}\n`)

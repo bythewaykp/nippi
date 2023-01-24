@@ -8,8 +8,29 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
         });
         t['main'] = String(msg.body).split(" -")[0].trim()
 
-        
-        if(msg.fromMe){
+
+        if(vars.all){
+
+            if(msg.fromMe){
+
+                switch(t['main']){
+            
+                    case "!l":
+                        await require("./Components/listAllGrps")(client,msg,t);
+                        break;
+            
+    
+                    case "!p":
+                        await require("./Components/adminPromote")(client,msg,t);
+                        break;
+            
+                    
+                    case "!b":
+                        await require("./Components/sendBulk")(client,msg,t,MessageMedia);
+                        break;
+                }
+                    
+            }    
 
             switch(t['main']){
 
@@ -17,34 +38,38 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
                     await require("./Components/help")(client,msg,t);
                     break;
         
-                case "!l":
-                    await require("./Components/listAllGrps")(client,msg,t);
-                    break;
-        
                 case "!m":
                     await require("./Components/mentionParticipants")(client,msg,t);
                     break;
-
+                
                 case "!p":
                     await require("./Components/adminPromote")(client,msg,t);
                     break;
-    
+
                 case "!d":
                     await require("./Components/adminDemote")(client,msg,t);
                     break;
-
+                
                 case "!y":
                     await require("./Components/ytDownload")(client,msg,t,MessageMedia);
                     break;
-        
+
                 case "!t":
-                    await require("./Components/test")(client,msg,t,vars,changeVars);
+                    await require("./Components/test")(client,msg,t,MessageMedia);
                     break;
 
+                case "!v":
+                    await require("./Components/editVariables")(client,msg,t,vars,changeVars);
+                    break;
+
+                case "!z":
+                    await require("./Components/sendGrpMessageMembers")(client,msg,t);
+                    break;
+                
                 case "!s":
                     await require("./Components/sticker")(client,msg,t);
                     break;
-        
+
                 case "!a":
                     let gspread = require("./Templates/gspread")
                     await require("./Components/membersAdd")(client,msg,t,gspread);
@@ -54,83 +79,19 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
                     await require("./Components/membersRemove")(client,msg,t);
                     break;
                 
-                case "!z":
-                    await require("./Components/sendGrpMessageMembers")(client,msg,t);
-                    break;
-                
-                case "!v":
-                    await require("./Components/editVariables")(client,msg,t,vars,changeVars);
+                case "!run":
+                    await require("./Components/reRun")(client,msg,MessageMedia,vars,changeVars);
                     break;
 
             }
-            
         }
         else{
-            // msg not fromMe
+            // msg not fromMe && turned off
 
-            if(vars.all){
-
-                switch(t['main']){
-    
-                    case "!h":
-                        await require("./Components/help")(client,msg,t);
-                        break;
-            
-                    case "!m":
-                        await require("./Components/mentionParticipants")(client,msg,t);
-                        break;
-                    
-                    case "!p":
-                        await require("./Components/adminPromote")(client,msg,t);
-                        break;
-    
-                    case "!d":
-                        await require("./Components/adminDemote")(client,msg,t);
-                        break;
-                    
-                    case "!y":
-                        await require("./Components/ytDownload")(client,msg,t,MessageMedia);
-                        break;
-    
-                    case "!t":
-                        await require("./Components/test")(client,msg,t,MessageMedia);
-                        break;
-
-                    case "!v":
-                        await require("./Components/editVariables")(client,msg,t,vars,changeVars);
-                        break;
-
-                    case "!z":
-                        await require("./Components/sendGrpMessageMembers")(client,msg,t);
-                        break;
-                    
-                    case "!s":
-                        await require("./Components/sticker")(client,msg,t);
-                        break;
-
-                    case "!a":
-                        let gspread = require("./Templates/gspread")
-                        await require("./Components/membersAdd")(client,msg,t,gspread);
-                        break;
-                    
-                    case "!r":
-                        await require("./Components/membersRemove")(client,msg,t);
-                        break;
-                    
-                    case "!q":
-                        await require("./Components/yt")(client,msg,t,MessageMedia);
-                        break;
-
-
-                }
+            if(t['main']=='!v'){
+                await require("./Components/editVariables")(client,msg,t,vars,changeVars);
             }
             else{
-                // msg not fromMe && turned off
-
-                if(t['main']=='!v'){
-                    await require("./Components/editVariables")(client,msg,t,vars,changeVars);
-                }
-                else{
 
 //                     mentions = [await client.getContactById(client.info.wid._serialized)]
 
@@ -140,15 +101,13 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
 
 // contact @${client.info.wid.user}`,null,{mentions}
 //                     )
-                }
             }
-
         }
 
     }
     catch(e){
         console.log(e);
     }
-
+    
     
 }
