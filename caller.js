@@ -12,20 +12,19 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
         if(vars.all){
 
             if(msg.fromMe){
-
                 switch(t['main']){
             
-                    case "!l":
+                    case ".l":
                         await require("./Components/listAllGrps")(client,msg,t);
                         break;
             
     
-                    case "!p":
+                    case ".p":
                         await require("./Components/adminPromote")(client,msg,t);
                         break;
             
                     
-                    case "!b":
+                    case ".b":
                         await require("./Components/sendBulk")(client,msg,t,MessageMedia);
                         break;
                 }
@@ -34,52 +33,52 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
 
             switch(t['main']){
 
-                case "!h":
+                case ".h":
                     await require("./Components/help")(client,msg,t);
                     break;
         
-                case "!m":
+                case ".m":
                     await require("./Components/mentionParticipants")(client,msg,t);
                     break;
                 
-                case "!p":
+                case ".p":
                     await require("./Components/adminPromote")(client,msg,t);
                     break;
 
-                case "!d":
+                case ".d":
                     await require("./Components/adminDemote")(client,msg,t);
                     break;
                 
-                case "!y":
+                case ".y":
                     await require("./Components/ytDownload")(client,msg,t,MessageMedia);
                     break;
 
-                case "!t":
+                case ".t":
                     await require("./Components/test")(client,msg,t,MessageMedia);
                     break;
 
-                case "!v":
+                case ".v":
                     await require("./Components/editVariables")(client,msg,t,vars,changeVars);
                     break;
 
-                case "!z":
+                case ".z":
                     await require("./Components/sendGrpMessageMembers")(client,msg,t);
                     break;
                 
-                case "!s":
+                case ".s":
                     await require("./Components/sticker")(client,msg,t);
                     break;
 
-                case "!a":
+                case ".a":
                     let gspread = require("./Templates/gspread")
                     await require("./Components/membersAdd")(client,msg,t,gspread);
                     break;
                 
-                case "!r":
+                case ".r":
                     await require("./Components/membersRemove")(client,msg,t);
                     break;
                 
-                case "!run":
+                case ".run":
                     await require("./Components/reRun")(client,msg,MessageMedia,vars,changeVars);
                     break;
 
@@ -88,7 +87,7 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
         else{
             // msg not fromMe && turned off
 
-            if(t['main']=='!v'){
+            if(t['main']=='.v'){
                 await require("./Components/editVariables")(client,msg,t,vars,changeVars);
             }
             else{

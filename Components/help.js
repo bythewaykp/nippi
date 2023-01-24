@@ -7,31 +7,31 @@ module.exports = async (client,msg,t) => {
 
 _The set of available commands are :_
 
-*!h* : _help, the bravest thing to do is ask for help._
+*.h* : _help, the bravest thing to do is ask for help._
 
-*!m* : _mention participants in a group_
+*.m* : _mention participants in a group_
 
-*!s -author <authorname> -pack <packname>* : _send the quoted/ sent media as sticker_
+*.s -author <authorname> -pack <packname>* : _send the quoted/ sent media as sticker_
 
-*!p -a @<name1> @<name2>* : _promote mentioned member(s) as admin(s)_
+*.p -a @<name1> @<name2>* : _promote mentioned member(s) as admin(s)_
 
-*!p* : _promote author of quoted message as admin_
+*.p* : _promote author of quoted message as admin_
 
-*!d -a @<name1> @<name2>* : _demote mentioned member(s) as admin(s)_
+*.d -a @<name1> @<name2>* : _demote mentioned member(s) as admin(s)_
 
-*!d* : _demote author of quoted message from admin_
+*.d* : _demote author of quoted message from admin_
 
-*!y -url <video/audio url>* : _sends the audio of the youtube video matching the url_
+*.y -url <video/audio url>* : _sends the audio of the youtube video matching the url_
 
-*!y -t <name>* : _sends the audio of the youtube video matching the corresponding name_
+*.y -t <name>* : _sends the audio of the youtube video matching the corresponding name_
 
-*!v* : _see if nippi is turned on or off_
+*.v* : _see if nippi is turned on or off_
 
-*!a -url <googlesheetsurl>* : _add participants to the group (2nd column should contain the numbers with a Header)_
+*.a -url <googlesheetsurl>* : _add participants to the group (2nd column should contain the numbers with a Header)_
 
-*!a -num <num1>* : _add participants to the group (numbers should be newline seperated with first number space seperated)_
+*.a -num <num1>* : _add participants to the group (numbers should be newline seperated with first number space seperated)_
 
-*!r @<user1>* : remove mentioned user(s) from the group
+*.r @<user1>* : remove mentioned user(s) from the group
 
 _Feel free to contact my owner @919947109776_
 `

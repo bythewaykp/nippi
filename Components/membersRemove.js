@@ -1,47 +1,38 @@
 module.exports = addGrp = async (client,msg,t)=>{
 
-    await msg.react('⚡');
+    let chat = await require('../Templates/basicCheckGroupChat')(client,msg)
+    // const chat = await msg.getChat()
 
-    const chat = await msg.getChat()
     let from = msg.author || msg.from 
     let sender = await client.getContactById(from)
-
     console.log(`${t['main']} called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
     
-    if(chat.isGroup){
+    if(chat){
 
-        let isadmin = require('./adminCheck')
+        await msg.react('⚡');
 
-        if(isadmin(client.info.wid._serialized,chat)){
-            //bot is admin
-            let mentions = await msg.getMentions()
-    
-            let namelist=[]
-            let removelist = []
-    
-            for(let i of mentions){
-    
-                let id = i.id._serialized
-                let sender = await client.getContactById(id)
-                namelist.push(sender.name)
-                removelist.push(id)
-            }
-            
-            try{
-                await chat.removeParticipants(removelist)
-                console.log(`removed ${namelist.join(", ")}`);
-    
-            }catch(e){
-                console.log(`error occured while removing ${namelist.join(", ")}`);
-            }
-        }
-        else{
-            //bot is not admin
-            await msg.reply('Promote me first to use this command')
-        }  
+        let mentions = await msg.getMentions()
         
+        let namelist=[]
+        let removelist = []
 
-    }            
+        for(let i of mentions){
+
+            let id = i.id._serialized
+            let sender = await client.getContactById(id)
+            namelist.push(sender.name)
+            removelist.push(id)
+        }
+        
+        try{
+            await chat.removeParticipants(removelist)
+            console.log(`removed ${namelist.join(", ")} from ${chat.name}`);
+
+        }catch(e){
+            console.log(`error occured while removing ${namelist.join(", ")} from ${chat.name}`);
+        }
+
+    }          
 
 }             
 

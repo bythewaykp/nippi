@@ -1,50 +1,48 @@
 module.exports = mentionParticipants = async (client, msg,t) => {
 
-    const chat = await msg.getChat();
+    // const chat = await msg.getChat();
+    let chat = await require('../Templates/basicCheckGroupChat')(client,msg)
 
     let from = msg.author || msg.from
+    let sender = await client.getContactById(from)
+    console.log(`${t['main']} called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
 
-    let auth = await client.getContactById(from)
-
-    console.log(`${t['main']} called at Group : '${chat.name}' by ${auth.name} aka ${auth.number}`);
     let text = "";
     let mentions = [];
+    
+    if(chat){
 
-    if(chat.isGroup){
+        await msg.react('⚡');
 
-        let isadmin = await require('./adminCheck')(client,msg,t)
+        for(let p of chat.participants){
 
-        if(isadmin){
+            if(from == p.id._serialized){
+                continue
+            }
+
+            let contact = await client.getContactById(
+                p.id._serialized
+            );
+
+            mentions.push(contact);
+    
+            text += `@${p.id.user} `
             
-            await msg.react('⚡');
-
-                for(let p of chat.participants){
-
-                    if(from == p.id._serialized){
-                        continue
-                    }
-
-                    let contact = await client.getContactById(
-                        p.id._serialized
-                    );
-
-                    mentions.push(contact);
-            
-                    text += `@${p.id.user} `
-                    
-                }
-                if(msg.hasQuotedMsg){
-                    let og = await msg.getQuotedMessage();
-                    og.reply(text, null,{ mentions });
-                }
-                else{
-                    chat.sendMessage(text,{mentions})
-                }
+        }
+        if(msg.hasQuotedMsg){
+            let og = await msg.getQuotedMessage();
+            if(og._data.t!=undefined){
+                og.reply(text, null,{ mentions });
+            }
+            else{
+                msg.reply('Message was sent before I was added to the Chat')
+            }
         }
         else{
-            msg.reply('not admin vro')
+            chat.sendMessage(text,{mentions})
         }
-
     }
+
+
 
 };
