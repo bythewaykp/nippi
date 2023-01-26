@@ -39,8 +39,10 @@ const clearCache = () => {
 };
 
 client.on("ready", async () => {
+
+    let sender = await client.getContactById(client.info.wid._serialized)
     
-    console.log("\n --- Client is ready! ---\n");
+    console.log(`\n --- ${sender.name || sender.pushname} aka ${sender.number} is ready! ---\n`);
     
 });
 
@@ -51,6 +53,12 @@ client.on('qr', qr => {
     }
     
 });
+client.on('auth_failure', qr => {
+
+    console.log('\n --- Authentication failed. scan the qr code to login again. --- \n');
+    
+});
+
 
 client.on("disconnected",async()=>{
 

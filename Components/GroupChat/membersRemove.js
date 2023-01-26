@@ -5,10 +5,10 @@ module.exports = addGrp = async (client,msg)=>{
 
     let from = msg.author || msg.from 
     let sender = await client.getContactById(from)
-    console.log(`.r called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
     
     if(chat){
-
+        
+        console.log(`.r called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
         await msg.react('⚡');
 
         let mentions = await msg.getMentions()
@@ -26,6 +26,7 @@ module.exports = addGrp = async (client,msg)=>{
         
         try{
             await chat.removeParticipants(removelist)
+            await msg.reply(`${removelist.map(i=>{})}`)
             console.log(`removed ${namelist.join(", ")} from ${chat.name}`);
 
         }catch(e){

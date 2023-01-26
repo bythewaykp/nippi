@@ -6,10 +6,10 @@ module.exports = async (client,msg) => {
 
     let from = msg.author || msg.from 
     let sender = await client.getContactById(from)
-    console.log(`.p called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
     
     if(chat){
-
+        
+        console.log(`.p called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
         await msg.react('⚡');
                         
         let commandAuthor = await client.getContactById(from)

@@ -5,10 +5,10 @@ module.exports = addGrp = async (client,msg,t,gspread)=>{
 
     let from = msg.author || msg.from 
     let sender = await client.getContactById(from)
-    console.log(`${t['main']} called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
     
     if(chat){
-
+        
+        console.log(`${t['main']} called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
         await msg.react('⚡');
             
         if(t['url']!=undefined){

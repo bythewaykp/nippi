@@ -2,33 +2,16 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
 
     try{
 
-        let v = String(msg.body).split(" ")[0].trim()
+        let v = String(msg.body).split(" ")[0]
         let t = String(msg.body).split(" ").splice(1).join(" ")
 
         if(vars.all){
 
-            if(msg.fromMe){
-
-                switch(v){
-            
-                    case ".l":
-                        await require("./Components/Basic/listAllGrps")(client,msg);
-                        break;
-            
-    
-                    case ".p":
-                        await require("./Components/GroupChat/adminPromote")(client,msg);
-                        break;
-            
-                    
-                    case ".b":
-                        await require("./Components/Basic/sendBulk")(client,msg,MessageMedia);
-                        break;
-                }
-                    
-            }    
-
             switch(v){
+
+                case ".t":
+                    await require("./Components/Features/test")(client,msg,t,MessageMedia);
+                    break;
 
                 case ".h":
                     await require("./Components/Basic/help")(client,msg);
@@ -45,13 +28,18 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
                 case ".d":
                     await require("./Components/GroupChat/adminDemote")(client,msg);
                     break;
+
+                case ".a":
+                    let gspread = require("./Components/Templates/gspread")
+                    await require("./Components/GroupChat/membersAdd")(client,msg,t,gspread);
+                    break;
+    
+                case ".r":
+                    await require("./Components/GroupChat/membersRemove")(client,msg);
+                    break;
                 
                 case ".y":
                     await require("./Components/Features/ytDownload")(client,msg,t,MessageMedia);
-                    break;
-
-                case ".t":
-                    await require("./Components/Features/test")(client,msg,t,MessageMedia);
                     break;
 
                 case ".v":
@@ -65,21 +53,30 @@ module.exports = async (client,msg,MessageMedia,vars,changeVars)=> {
                 case ".s":
                     await require("./Components/Features/sticker")(client,msg,t);
                     break;
-
-                case ".a":
-                    let gspread = require("./Components/Templates/gspread")
-                    await require("./Components/GroupChat/membersAdd")(client,msg,t,gspread);
-                    break;
-                
-                case ".r":
-                    await require("./Components/GroupChat/membersRemove")(client,msg);
-                    break;
                 
                 case ".run":
                     await require("./Components/Basic/reRun")(client,msg,MessageMedia,vars,changeVars);
                     break;
 
             }
+
+            if(msg.fromMe){
+
+                //message sent by owner
+
+                switch(v){
+            
+                    case ".l":
+                        await require("./Components/Basic/listAllGrps")(client,msg);
+                        break;
+                    
+                    case ".b":
+                        await require("./Components/Basic/sendBulk")(client,msg,MessageMedia);
+                        break;
+                }
+                    
+            }    
+
         }
         else{
             // msg not fromMe && turned off

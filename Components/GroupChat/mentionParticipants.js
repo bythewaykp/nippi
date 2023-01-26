@@ -5,13 +5,13 @@ module.exports = mentionParticipants = async (client, msg) => {
 
     let from = msg.author || msg.from
     let sender = await client.getContactById(from)
-    console.log(`.m called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
-
+    
     let text = "";
     let mentions = [];
     
     if(chat){
-
+        
+        console.log(`.m called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
         await msg.react('⚡');
 
         for(let p of chat.participants){

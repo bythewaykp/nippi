@@ -2,19 +2,18 @@
 module.exports = async (client,msg) => {
 
     let chat = await require('../Templates/basicCheckGroupChat')(client,msg)
+    let isadmin = require('../Templates/adminCheck')
     // const chat = await msg.getChat()
 
     let from = msg.author || msg.from 
     let sender = await client.getContactById(from)
-    console.log(`.d called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
     
     if(chat){
-
+        
+        console.log(`.d called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
         await msg.react('⚡');
                         
-        let commandAuthor = await client.getContactById(from)
-
-        console.log(`.d called at Group : '${chat.name}' by ${commandAuthor.name} aka ${commandAuthor.number}`);
+        console.log(`.d called at Group : '${chat.name}' by ${sender.name} aka ${sender.number}`);
 
         if(msg.hasQuotedMsg){
             //has quoted message
@@ -55,24 +54,34 @@ module.exports = async (client,msg) => {
             }
             else{
                 //mentions are present in quoted message
-                
-                for(let p of chat.participants){
 
-                    for ( let i of mentions){
-                        if(i.id._serialized == p.id._serialized){
+                for (let i of mentions){
 
-                            if(!p.isAdmin){
-                                alreadyDemotedText.push( `@${p.id.user}`)
-                            }
-                            else{
-                                toDemote.push(p.id._serialized)
-                                toDemoteText.push( `@${p.id.user}`)
-                            }
-                            
-                        }
+                    if(isadmin(i.id._serialized,chat)){
+                        toDemote.push(i.id._serialized)
+                        toDemoteText.push( `@${i.id.user}`)
+                    }
+                    else{
+                        alreadyDemotedText.push( `@${i.id.user}`)
                     }
                 }
+                
+                // for(let p of chat.participants){
 
+                //     for ( let i of mentions){
+                //         if(i.id._serialized == p.id._serialized){
+
+                //             if(!p.isAdmin){
+                //                 alreadyDemotedText.push( `@${p.id.user}`)
+                //             }
+                //             else{
+                //                 toDemote.push(p.id._serialized)
+                //                 toDemoteText.push( `@${p.id.user}`)
+                //             }
+                            
+                //         }
+                //     }
+                // }
                 
                 mentions.push(await client.getContactById(from));
                 
@@ -83,15 +92,9 @@ module.exports = async (client,msg) => {
 
                     await chat.demoteParticipants(toDemote)
 
-                    if(alreadyDemotedText.length==0){
-                        msg.reply(`demoted ${toDemoteText.join(', ')} by @${from.split("@")[0]}`, null,{ mentions});
-                    }
-                    else if(alreadyDemotedText.length.length==1){
-                        msg.reply(`demoted ${toDemoteText.join(', ')} by @${from.split("@")[0]} ~ ${alreadyDemotedText.join(', ')} is already not an admin`, null,{ mentions});
-                    }
-                    else{
-                        msg.reply(`demoted ${toDemoteText.join(', ')} by @${from.split("@")[0]} ~ ${alreadyDemotedText.join(', ')} are already not admins`, null,{ mentions});
-                    }
+                    await msg.reply(`demoted ${toDemoteText.join(', ')} by @${from.split("@")[0]} ${alreadyDemotedText.length==0?``:`~ ${alreadyDemotedText.length==1?`${alreadyDemotedText[0]} is already not an admin`:`${alreadyDemotedText.join(', ')} are already not admins`}`}`, null,{ mentions});
+
+                    // }
                 }
             }
 

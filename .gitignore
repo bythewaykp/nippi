@@ -5,6 +5,6 @@ package-lock.json
 /Sessions
 /SessionTest
 .env
-/Test
 /Templates/creds.json
 /Components/test.js
+/Test
