@@ -1,4 +1,4 @@
-module.exports = async (client,msg,MessageMedia,mongoose,store)=> {
+module.exports = async (client,msg,MessageMedia,mongoose)=> {
 
     try{
 

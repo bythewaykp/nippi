@@ -1,7 +1,7 @@
 // let axios = require('axios')
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
-module.exports = async (client,msg,t) => {
+module.exports = async (client,msg,Vars) => {
 
     let url = "mongodb+srv://kphere:KPabhi%40129AjMo@cluster0.1eyds.mongodb.net/test"
 

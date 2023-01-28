@@ -38,6 +38,12 @@ const clearCache = () => {
     });
 };
 
+client.on("authenticated", async () => {
+    
+    console.log("\n --- Client authenticated ! ---\n");
+
+})
+
 client.on("ready", async () => {
 
     let sender = await client.getContactById(client.info.wid._serialized)

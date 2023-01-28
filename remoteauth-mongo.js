@@ -24,6 +24,11 @@ let a = async () => {
         
         await mongoose.connect(uri)
 
+        // const Vars = mongoose.model('var', new mongoose.Schema({
+        //     id:String,
+        //     all: Boolean
+        // }));
+
         let store = new MongoStore({ mongoose });
     
         const client = new Client({
@@ -85,7 +90,7 @@ let a = async () => {
         
             clearCache();
             
-            await require("./caller2")(client,msg,MessageMedia,mongoose,store);
+            await require("./caller2")(client,msg,MessageMedia,Vars);
             
         });
 
