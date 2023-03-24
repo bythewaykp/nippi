@@ -1,9 +1,5 @@
-
-module.exports = async (client,msg) => {
-
-    let text = 
-
-`_Hey I'm @${client.info.wid.user}, a friend to make your social life easier._
+module.exports = async (client, msg) => {
+  let text = `_Hey I'm @${client.info.wid.user}, a friend to make your social life easier._
 
 _The set of available commands are :_
 
@@ -26,31 +22,34 @@ _The set of available commands are :_
 *.v* : _see if nippi is turned on or off_
 
 _Feel free to contact my dev @919947109776_
-`
+`;
 
-    await msg.react('⚡');
+  await msg.react("⚡");
 
-    let chat = await msg.getChat()
-    let from = msg.author || msg.from 
-    let sender = await client.getContactById(from)
+  let chat = await msg.getChat();
+  let from = msg.author || msg.from;
+  let sender = await client.getContactById(from);
 
-    let mentions = [await client.getContactById('919947109776@c.us'),await client.getContactById(client.info.wid._serialized)]
+  let mentions = [
+    await client.getContactById("919947109776@c.us"),
+    await client.getContactById(client.info.wid._serialized),
+  ];
 
-    if(chat.isGroup){
-        console.log(`.h called at Group : '${chat.name}' by ${sender.name || sender.pushname} aka ${sender.number}`);
-    }
-    else{
-        console.log(`.h called by ${sender.name || sender.pushname} aka ${sender.number}`);
-    }
-    if(msg.hasQuotedMsg){
-        let og = await msg.getQuotedMessage()
-        await og.reply(text)
-    }
-    else{
-        await msg.reply(text,null,{mentions})
-    }
-
-    
-}
-
-
+  if (chat.isGroup) {
+    console.log(
+      `.h called at Group : '${chat.name}' by ${
+        sender.name || sender.pushname
+      } aka ${sender.number}`
+    );
+  } else {
+    console.log(
+      `.h called by ${sender.name || sender.pushname} aka ${sender.number}`
+    );
+  }
+  if (msg.hasQuotedMsg) {
+    let og = await msg.getQuotedMessage();
+    await og.reply(text);
+  } else {
+    await msg.reply(text, null, { mentions });
+  }
+};

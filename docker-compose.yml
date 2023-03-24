@@ -1,0 +1,19 @@
+version: "1"
+services:
+  wwebjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: kp
+    container_name: nippi
+    # stdin_open: true
+    # tty: true
+    command:  npm run start
+    environment:
+      - DEBUG=True
+    volumes:
+      - .:/usr/app
+      - /app/node_modules
+    restart: unless-stopped
+    # ports:
+    #   - 5000:3000
