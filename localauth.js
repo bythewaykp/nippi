@@ -55,9 +55,10 @@ client.on("ready", async () => {
 });
 
 client.on("qr", (qr) => {
-    if (headless) {
-        qrcode.generate(qr, { small: true });
-    }
+    console.log(qr);
+    // if (headless) {
+    //     qrcode.generate(qr, { small: true });
+    // }
 });
 client.on("auth_failure", (qr) => {
     console.log(
