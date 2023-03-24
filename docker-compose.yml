@@ -12,8 +12,8 @@ services:
     environment:
       - DEBUG=True
     volumes:
-      - .:/usr/app
-      - /app/node_modules
+      - storage:/usr/app
+      # - usr/app/node_modules
     restart: unless-stopped
     # ports:
     #   - 5000:3000
